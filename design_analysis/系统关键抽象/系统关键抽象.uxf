@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>30</y>
+      <w>220</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>Model: PatientInfo
+--
+ID
+Name
+CardNum
+Sex
+Age
+Registration_Time
+Visting_Time
+Patient_SignInfo
+--
+Add_PatientInfo()
+Set_PatientInfo()
+Delete_PatientInfo()
+Get_PatientInfo()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>30</y>
+      <w>220</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>Model: Patient_SignInfo
+--
+height
+weight
+temperature
+respiration
+pulse
+blood_pressure
+disease_description
+blood_sugar
+--
+Add_Patient_SignInfo()
+Set_Patient_SignInfo()
+Delete_Patient_SignInfo()
+Get_Patient_SignInfo()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>290</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Model: DoctorInfo
+--
+Name
+Office
+EmpID
+Introduction
+--
+Add_DoctorInfo()
+Set_DoctorInfo()
+Delete_DoctorInfo()
+Get_DoctorInfo()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>470</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Model: OfficeInfo
+--
+Name
+description
+--
+Add_OfficeInfo()
+Set_OfficeInfo()
+Delete_OfficeInfo()
+Get_OfficeInfo()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>30</y>
+      <w>210</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>Model: QueueInfo
+--
+First_diagnosis
+Twice_diagnosis
+Triage
+Waiting
+Visiting
+Done
+--
+Add_QueueInfo()
+Set_QueueInfo()
+Delete_QueueInfo()
+Get_QueueInfo()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>290</y>
+      <w>200</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Model: Nurse
+--
+OfficeInfo
+QueueInfo
+DoctorInfo
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>290</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Model: NoticeInfo
+--
+Title
+Content
+--
+Add_TitleInfo()
+Set_TitleInfo()
+Delete_TitleInfo()
+Get_TitleInfo()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>450</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Model: Patient
+--
+Time
+--
+Get_OfficeInfo()
+Get_NoticeInfo()
+Get_DoctorInfo()
+Get_WaitingQueue()
+Get_VisitingQueue()
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
