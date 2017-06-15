@@ -1,0 +1,279 @@
+﻿<Window x:Class="iQueue.patient_watch"
+        xmlns:avalon="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:iQueue"
+        mc:Ignorable="d"
+        Title="医用排队系统" Height="500" Width="1300" MinHeight="500" MinWidth="1300">
+    <Grid Margin="50">
+        <avalon:DockingManager x:Name="dockingManager">
+            <avalon:LayoutRoot>
+                <avalon:LayoutPanel Orientation="Horizontal" >
+                    <avalon:LayoutDocumentPane DockWidth="150" >
+                        <avalon:LayoutAnchorable CanClose="False" Title="科室队列">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="5*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Height="50"  HorizontalAlignment="Center" FontSize="30" Grid.Row="0">首诊队列</TextBlock>
+                                    <ListView Name="First_queue"  ItemsSource="{Binding}" Grid.Row="1" >
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}">
+                                                <Style.Setters>
+                                                    <EventSetter Event="MouseDoubleClick" Handler="OnListViewItemDoubleClick" />
+                                                </Style.Setters>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="队列位置" DisplayMemberBinding="{Binding Position}" Width="90"/>
+                                                <GridViewColumn Header="病人姓名" DisplayMemberBinding="{Binding Name}" Width="90"/>
+                                                <GridViewColumn Header="入队时间" DisplayMemberBinding="{Binding Time}" Width="90"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+
+                                    
+                                </Grid>
+                                <Grid Grid.Column="1" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="5*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock HorizontalAlignment="Center" FontSize="30" Height="50" Grid.Row="0">二诊队列</TextBlock>
+                                    <ListView Name="Second_queue"  ItemsSource="{Binding}" HorizontalAlignment="Left" Width="294" Grid.ColumnSpan="2" Grid.Row="1">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}">
+                                                <Style.Setters>
+                                                    <EventSetter Event="MouseDoubleClick" Handler="OnListViewItemDoubleClick" />
+                                                </Style.Setters>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="队列位置" DisplayMemberBinding="{Binding Position}" Width="90"/>
+                                                <GridViewColumn Header="病人姓名" DisplayMemberBinding="{Binding Name}" Width="90"/>
+                                                <GridViewColumn Header="入队时间" DisplayMemberBinding="{Binding Time}" Width="90"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="5*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock HorizontalAlignment="Center"  FontSize="30" Height="50"  Grid.Row="0">分诊队列</TextBlock>
+                                    
+                                    
+                                    <ListView Name="Triage_queue"  ItemsSource="{Binding}" HorizontalAlignment="Center" Width="293" Grid.Row="1">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}">
+                                                <Style.Setters>
+                                                    <EventSetter Event="MouseDoubleClick" Handler="OnListViewItemDoubleClick" />
+                                                </Style.Setters>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            
+                                            <GridView>
+                                                <GridViewColumn Header="队列位置" DisplayMemberBinding="{Binding Position}" Width="90"/>
+                                                <GridViewColumn Header="病人姓名" DisplayMemberBinding="{Binding Name}" Width="90"/>
+                                                <GridViewColumn Header="入队时间" DisplayMemberBinding="{Binding Time}" Width="90"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+                                <Grid Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="3*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Height="30" Width="80" HorizontalAlignment="Center">诊室相关操作</TextBlock>
+
+                                    
+                                    <Button Grid.Row="1" Height="35" Width="90" Click="Add_office" HorizontalAlignment="Center">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Image Name="btnbg" Source=".\icon\add1.jpg" />
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Source"  Value=".\icon\add2.jpg" TargetName="btnbg" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter Property="Source" Value=".\icon\add1.jpg" TargetName="btnbg" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <TextBlock Grid.Row="2" Height="30" Width="80" HorizontalAlignment="Center">患者相关操作</TextBlock>
+                                    <Button Grid.Row="3" Height="35" Width="90" Click="Register"  HorizontalAlignment="Center" Background="SkyBlue" Foreground="Black">挂号</Button>
+                                    <Button Grid.Row="4" Height="35" Width="90" Click="CheckIn"  HorizontalAlignment="Center" Background="SkyBlue" Foreground="Black">报道</Button>
+                                    <Button Grid.Row="5" Height="35" Width="90" Click="Next"  HorizontalAlignment="Center" Background="SkyBlue" Foreground="Black">下一个</Button>
+                                    
+                                </Grid>
+                                
+                            </Grid>
+                        </avalon:LayoutAnchorable>
+                        <avalon:LayoutAnchorable CanClose="False" Title="诊室队列">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                            
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="5*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock HorizontalAlignment="Center" Grid.Row="0" FontSize="30" Height="50">候诊队列</TextBlock>
+                                    <ListView Name="Waiting_queue" ItemsSource="{Binding}" Grid.Row="1">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="队列位置" DisplayMemberBinding="{Binding Position}" Width="90"/>
+                                                <GridViewColumn Header="病人姓名" DisplayMemberBinding="{Binding Name}" Width="90"/>
+                                                <GridViewColumn Header="入队时间" DisplayMemberBinding="{Binding Time}" Width="90"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+                                <Grid Grid.Column="1">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="5*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock HorizontalAlignment="Center" Grid.Row="0" FontSize="30" Height="50">完诊队列</TextBlock>
+                                    <ListView Name="Finish_queue" ItemsSource="{Binding}" Grid.Row="1">
+                                        
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="队列位置" DisplayMemberBinding="{Binding Position}" Width="90"/>
+                                                <GridViewColumn Header="病人姓名" DisplayMemberBinding="{Binding Name}" Width="90"/>
+                                                <GridViewColumn Header="入队时间" DisplayMemberBinding="{Binding Time}" Width="90"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+                                <Grid Grid.Column="2" Margin="30"> 
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0">当前诊室医生</TextBlock>
+                                    <TextBlock Name="Doctor_Name" Grid.Row="1"></TextBlock>
+                                    <TextBlock Grid.Row="2">医生描述</TextBlock>
+                                    <TextBlock Name="Doctor_Profile" Grid.Row="3"></TextBlock>
+                                    <TextBlock Grid.Row="4">坐诊开始</TextBlock>
+                                    <TextBlock Name="Doctor_StartTime" Grid.Row="5"></TextBlock>
+                                    <TextBlock Grid.Row="6">坐诊结束</TextBlock>
+                                    <TextBlock Name="Doctor_EndTime" Grid.Row="7"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="3*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0"  HorizontalAlignment="Center" Height="30" Width="80">请选择诊室</TextBlock>
+                                    <ComboBox Grid.Row="1" DataContext="请选择诊室名称" VerticalAlignment="Top" >
+                                        <ComboBoxItem Name="诊室1" Selector.IsSelected="True">诊室1</ComboBoxItem>
+                                        <ComboBoxItem>诊室2</ComboBoxItem>
+                                    </ComboBox>
+                                    <TextBlock Grid.Row="2"  HorizontalAlignment="Center" Height="30" Width="80">诊室相关操作</TextBlock>
+                                    <Button Grid.Row="3" Height="35" Width="90" HorizontalAlignment="Center" Background="SkyBlue" Foreground="Black">下一位病人</Button>
+                                </Grid>
+                                
+                            </Grid>
+                        </avalon:LayoutAnchorable>
+                        <avalon:LayoutAnchorable CanClose="False" Title="病人信息">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="6*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <ListView Name="PatientView" ItemsSource="{Binding}" Grid.Row="0">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="病历号" DisplayMemberBinding="{Binding patientID}" Width="80"/>
+                                            <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding name}" Width="80"/>
+                                            <GridViewColumn Header="就诊卡号" DisplayMemberBinding="{Binding cardNum}" Width="90"/>
+                                            <GridViewColumn Header="性别" DisplayMemberBinding="{Binding sex}" Width="80"/>
+                                            <GridViewColumn Header="年龄" DisplayMemberBinding="{Binding age}" Width="80"/>
+                                            <GridViewColumn Header="挂号时间" DisplayMemberBinding="{Binding registration_time}" Width="90"/>
+                                            <GridViewColumn Header="报到时间" DisplayMemberBinding="{Binding visting_time}" Width="90"/>
+                                            <GridViewColumn Header="身高" DisplayMemberBinding="{Binding height}" Width="80"/>
+                                            <GridViewColumn Header="体重" DisplayMemberBinding="{Binding weight}" Width="80"/>
+                                            <GridViewColumn Header="体温" DisplayMemberBinding="{Binding temperature}" Width="80"/>
+                                            <GridViewColumn Header="呼吸" DisplayMemberBinding="{Binding respiration}" Width="80"/>
+                                            <GridViewColumn Header="脉搏" DisplayMemberBinding="{Binding pulse}" Width="80"/>
+                                            <GridViewColumn Header="血压" DisplayMemberBinding="{Binding blood_pressure}" Width="80"/>
+                                            <GridViewColumn Header="疾病描述" DisplayMemberBinding="{Binding disease_description}" Width="90"/>
+                                            <GridViewColumn Header="血糖" DisplayMemberBinding="{Binding blood_sugar}" Width="80"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Grid Grid.Row="1">
+                                <Button Height="25" HorizontalAlignment="Right" Margin="0,0,150,10" Name="add_patient_butt" Click="add_patient_butt_Click" VerticalAlignment="Bottom" Width="70" Background="SkyBlue" Foreground="Black">增加</Button>
+                                <Button Height="25" Margin="0,0,50,10" Name="remove_butt" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Background="SkyBlue" Foreground="Black">删除</Button>
+                                </Grid>
+                            </Grid>
+                        </avalon:LayoutAnchorable>
+                        
+                        <avalon:LayoutAnchorable CanClose="False" Title="医生信息">
+                            <Grid>
+                                <ListView Name="DoctorView" ItemsSource="{Binding}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding cardNum}" Width="80"/>
+                                        <GridViewColumn Header="性别" DisplayMemberBinding="{Binding sex}" Width="80"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                                <Button Height="25" HorizontalAlignment="Right" Margin="0,0,150,10" Name="add_doctor_butt" VerticalAlignment="Bottom" Width="70" Background="SkyBlue" Foreground="Black">增加</Button>
+                                <Button Height="25" Margin="0,0,50,10" Name="remove_doctor_butt" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Background="SkyBlue" Foreground="Black">删除</Button>
+                            </Grid>
+                        </avalon:LayoutAnchorable>
+                   
+                    </avalon:LayoutDocumentPane>
+                </avalon:LayoutPanel>
+            </avalon:LayoutRoot>
+
+        </avalon:DockingManager>
+    </Grid>
+</Window>
