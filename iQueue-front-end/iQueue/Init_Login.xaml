@@ -9,9 +9,10 @@
     <Grid>
         <TextBlock Text="账号" Width="60" Height="30" Margin="0,120,70,0"></TextBlock>
         <TextBox Height="30" Margin="86,100,0,0" Width="120" Name="username"/>
-        <Button Name="Send" Click="Send_Click" Width="59" Height="30" Margin="0,260,0,0" Background="SkyBlue" Foreground="Black" >登陆</Button>
+        <Button Name="Send" Click="Send_Click" Width="59" Height="30" Margin="0,260,0,0" >登陆</Button>
         <TextBlock Text="密码" Width="59" Height="30" Margin="0,190,70,0"/>
         <TextBox Height="30" Margin="86,179,0,0" Width="120" Name="password"/>
-        <Image Name="IconV1" Source=".\icon\IconV1.jpg" Margin="0,0,0,100" Width="100"/>
+        <Image Name="IconV1" Source=".\icon\IconV1.jpg" Margin="0,0,0,200" Width="100"/>
+        <TextBlock Text="门诊分诊挂号系统" Width="100" Height="30" />
     </Grid>
 </Window>

@@ -25,18 +25,12 @@
         public string disease_description { get; set; }
         public string blood_sugar { get; set; }
     }
-    public class First_Second_Triage_Queue_row
+    public class row
     {
         public string Position { get; set; }
         public string Name { get; set; }
         public string Time { get; set; }
-        public string Office { get; set; }
-    }
-    public class Waiting_Finish_Queue_row
-    {
-        public string Position { get; set; }
-        public string Name { get; set; }
-        public string Time { get; set; }
+        public string pId { get; set; }
     }
     public class Doctor_List_row
     {
@@ -76,6 +70,18 @@
         public DoctorInfo[] allDoctor = new DoctorInfo[1000];
         public QueueInfo[] allQueue = new QueueInfo[1000];
     }
+    //转诊
+    public class TriageOffice
+    {
+        public string clinicId;
+        public string pId;
+    }
+    //转诊
+    public class ToQueue
+    {
+        public string queueId;
+        public string pId;
+    }
     //Type0：初始化
     public class INITIALIZE
     {
@@ -98,6 +104,16 @@
         public string opcode = "initPatientInfo";
 
     }
+    public class INITDOCTORINFO
+    {
+        public string opcode = "initDoctorInfo";
+
+    }
+    public class INITQUEUEINFO
+    {
+        public string opcode = "officeQueue";
+
+    }
     //Type2：患者队列变换
     public class CHANGE_PATIENT_QUEUE
     {
@@ -108,6 +124,13 @@
         public string current_doctorID { get; set; }
         public string target_queueID { get; set; }
         public string target_doctorID { get; set; }
+    }
+
+    public class TRIAGE_OFFICE
+    {
+        public string opcode = "choiceDoctor";
+        public string pId { get; set; }
+        public string clinicId { get; set; }
     }
     //Type3： 患者诊室变换
     public class CHANGE_PATIENT_OFFICE
@@ -158,8 +181,9 @@
     //Type10：医生队列变化，也就是“下一个”
     public class DOCTOR_SAY_NEXT
     {
-        public string opcode  = "next";
-        public string name { get; set; }
+        public string opcode  = "change";
+        public string newQueueId { get; set; }
+        public string pId { get; set; }
     }
     /*以下是应答*/
     //Type0：初始化

@@ -7,6 +7,7 @@ namespace BLL.Network
 {
     public class NetworkWorker
     {
+
         public string login(INITIALIZE initialize)
         {
             try
@@ -34,7 +35,7 @@ namespace BLL.Network
             }
 
         }
-        public string initinfo(INITINFO initinfo_) {
+        public string initQueueInfo(INITQUEUEINFO initQueueInfo_) {
             try {
                 HttpClient httpClient = new HttpClient();
                 httpClient.MaxResponseContentBufferSize = 256000;
@@ -42,7 +43,7 @@ namespace BLL.Network
                 String url = "http://192.168.137.1:8080/iQueue/officeQueue";
 
                 var values = new List<KeyValuePair<string, string>>();
-                values.Add(new KeyValuePair<string, string>("opcode", initinfo_.opcode));
+                values.Add(new KeyValuePair<string, string>("opcode", initQueueInfo_.opcode));
                 values.Add(new KeyValuePair<string, string>("officeId", "guke8765"));
                 var content = new FormUrlEncodedContent(values);
 
@@ -67,6 +68,58 @@ namespace BLL.Network
 
                 var values = new List<KeyValuePair<string, string>>();
                 values.Add(new KeyValuePair<string, string>("opcode", initclinic_.opcode));
+                var content = new FormUrlEncodedContent(values);
+
+                HttpResponseMessage response = new HttpResponseMessage();
+                response = httpClient.PostAsync(new Uri(url), content).Result;
+
+                String result = response.Content.ReadAsStringAsync().Result;
+                return result;
+            }
+            catch
+            {
+                return "unable to connect server:timeout(3)";
+            }
+
+        }
+        public string getClinicList()
+        {
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                httpClient.MaxResponseContentBufferSize = 256000;
+                httpClient.Timeout = TimeSpan.FromSeconds(3);
+                String url = "http://192.168.137.1:8080/iQueue/getClinicList";
+
+                var values = new List<KeyValuePair<string, string>>();
+                values.Add(new KeyValuePair<string, string>("opcode", "getClinicList"));
+                values.Add(new KeyValuePair<string, string>("officeId", "guke8765"));
+                var content = new FormUrlEncodedContent(values);
+
+                HttpResponseMessage response = new HttpResponseMessage();
+                response = httpClient.PostAsync(new Uri(url), content).Result;
+
+                String result = response.Content.ReadAsStringAsync().Result;
+                return result;
+            }
+            catch
+            {
+                return "unable to connect server:timeout(3)";
+            }
+
+        }
+        public string getClinicDetail(string clinicId)
+        {
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                httpClient.MaxResponseContentBufferSize = 256000;
+                httpClient.Timeout = TimeSpan.FromSeconds(3);
+                String url = "http://192.168.137.1:8080/iQueue/clinicDetail";
+
+                var values = new List<KeyValuePair<string, string>>();
+                values.Add(new KeyValuePair<string, string>("opcode", "clinicDetail"));
+                values.Add(new KeyValuePair<string, string>("clinicId", clinicId));
                 var content = new FormUrlEncodedContent(values);
 
                 HttpResponseMessage response = new HttpResponseMessage();
@@ -128,11 +181,12 @@ namespace BLL.Network
                 HttpClient httpClient = new HttpClient();
                 httpClient.MaxResponseContentBufferSize = 256000;
                 httpClient.Timeout = TimeSpan.FromSeconds(3);
-                String url = "http://192.168.137.1:8080/iQueue/next";
+                String url = "http://192.168.137.1:8080/iQueue/change";
 
                 var values = new List<KeyValuePair<string, string>>();
                 values.Add(new KeyValuePair<string, string>("opcode", next.opcode));
-                values.Add(new KeyValuePair<string, string>("name", next.name));
+                values.Add(new KeyValuePair<string, string>("newQueueId", next.newQueueId));
+                values.Add(new KeyValuePair<string, string>("pId", next.pId));
 
                 var content = new FormUrlEncodedContent(values);
                 HttpResponseMessage response = new HttpResponseMessage();
@@ -146,7 +200,7 @@ namespace BLL.Network
             }
 
         }
-        public string initPatientinfo(INITPATIENTINFO init)
+        public string initPatientInfo(INITPATIENTINFO init)
         {
             try
             {
@@ -170,6 +224,58 @@ namespace BLL.Network
             }
 
         }
+        public string initDoctorInfo(INITDOCTORINFO initDoctorInfo_)
+        {
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                httpClient.MaxResponseContentBufferSize = 256000;
+                httpClient.Timeout = TimeSpan.FromSeconds(3);
+                String url = "http://192.168.137.1:8080/iQueue/officeQueue";
+
+                var values = new List<KeyValuePair<string, string>>();
+                values.Add(new KeyValuePair<string, string>("opcode", initDoctorInfo_.opcode));
+                var content = new FormUrlEncodedContent(values);
+
+                HttpResponseMessage response = new HttpResponseMessage();
+                response = httpClient.PostAsync(new Uri(url), content).Result;
+
+                String result = response.Content.ReadAsStringAsync().Result;
+                return result;
+            }
+            catch
+            {
+                return "unable to connect server:timeout(3)";
+            }
+
+        }
+        public string triage(TRIAGE_OFFICE triage_office_)
+        {
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                httpClient.MaxResponseContentBufferSize = 256000;
+                httpClient.Timeout = TimeSpan.FromSeconds(3);
+                String url = "http://192.168.137.1:8080/iQueue/choiceDoctor";
+
+                var values = new List<KeyValuePair<string, string>>();
+                values.Add(new KeyValuePair<string, string>("opcode", triage_office_.opcode));
+                values.Add(new KeyValuePair<string, string>("pId", triage_office_.pId));
+                values.Add(new KeyValuePair<string, string>("officeID", triage_office_.clinicId));
+                var content = new FormUrlEncodedContent(values);
+
+                HttpResponseMessage response = new HttpResponseMessage();
+                response = httpClient.PostAsync(new Uri(url), content).Result;
+
+                String result = response.Content.ReadAsStringAsync().Result;
+                return result;
+            }
+            catch
+            {
+                return "unable to connect server:timeout(3)";
+            }
+
+        }
         public string Send_action(object pb)
         {
             if (pb is User)
@@ -184,11 +290,19 @@ namespace BLL.Network
                 ap.info = (PatientInfo)pb;
                 return add_patient(ap);
             }
-            else if (pb is String)
+            else if (pb is ToQueue)
             {
                 DOCTOR_SAY_NEXT ap = new DOCTOR_SAY_NEXT();
-                ap.name = (String)pb;
+                ap.pId = ((ToQueue)pb).pId;
+                ap.newQueueId = ((ToQueue)pb).queueId;
                 return next(ap);
+            }
+            else if (pb is TriageOffice)
+            {
+                TRIAGE_OFFICE ap = new TRIAGE_OFFICE();
+                ap.pId = ((TriageOffice)pb).pId;
+                ap.clinicId = ((TriageOffice)pb).clinicId;
+                return triage(ap);
             }
             else return "invalid sending object";
         }
